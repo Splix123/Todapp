@@ -1,0 +1,64 @@
+{
+  "lists": [
+    {
+      "id": 1,
+      "label": "Daily",
+      "icon": 2,
+      "path": "/1"
+    },
+    {
+      "id": 2,
+      "label": "Work",
+      "icon": 4,
+      "path": "/2"
+    },
+    {
+      "id": 3,
+      "label": "Home",
+      "icon": 1,
+      "path": "/3"
+    }
+  ],
+  "tasks": [
+    {
+      "id": 1.1,
+      "title": "Test task hallo",
+      "checked": false
+    },
+    {
+      "id": 1.2,
+      "title": "Test task 2",
+      "checked": true
+    },
+    {
+      "id": 1.3,
+      "title": "Test task 3",
+      "checked": true
+    },
+    {
+      "id": 2.1,
+      "title": "Test task hallo 2",
+      "checked": true
+    },
+    {
+      "id": 2.2,
+      "title": "Test task 2",
+      "checked": false
+    },
+    {
+      "id": 2.3,
+      "title": "Test task 3",
+      "checked": true
+    },
+    {
+      "id": 3.1,
+      "title": "Test task",
+      "checked": true
+    },
+    {
+      "id": 3.2,
+      "title": "Test task 2",
+      "checked": false
+    }
+  ]
+}
