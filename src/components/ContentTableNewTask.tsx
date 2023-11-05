@@ -1,6 +1,6 @@
 // Libraries
 import { useState } from "react";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation } from "react-query";
 import { TableRow, TableCell, Checkbox, TextField } from "@mui/material";
 
 // Types

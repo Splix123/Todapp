@@ -1,5 +1,5 @@
 // Libraries
-import { useQuery } from "@tanstack/react-query";
+import { useQuery } from "react-query";
 import { useEffect, useState } from "react";
 import {
   Divider,

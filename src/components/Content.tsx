@@ -1,5 +1,5 @@
 // Libraries
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "react-query";
 import { useEffect, useState } from "react";
 import { Table, TableContainer, Typography } from "@mui/material";
 
