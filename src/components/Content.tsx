@@ -89,7 +89,7 @@ function Content({ selectedListIndex, selectedListName }: Props) {
   }
 
   return (
-    <>
+    <div style={{ marginLeft: "350px" }}>
       <Typography
         variant="h3"
         fontWeight="light"
@@ -115,7 +115,7 @@ function Content({ selectedListIndex, selectedListName }: Props) {
           />
         </Table>
       </TableContainer>
-    </>
+    </div>
   );
 }
 

@@ -1,6 +1,6 @@
 // Libraries
 import { useState } from "react";
-// import { useMutation } from "react-query";
+import { useMutation } from "react-query";
 import { TableCell, TextField, Typography } from "@mui/material";
 
 // Types
@@ -8,6 +8,12 @@ type Task = {
   id: number;
   title: string;
   checked: boolean;
+};
+
+type Props = {
+  tasks: Task[];
+  setTasks: (newTasks: Task[]) => void;
+  taskId: number;
 };
 
 // Mutation functions
@@ -22,22 +28,30 @@ async function changeTask(changedTask: Task) {
       body: JSON.stringify(changedTask),
     }
   );
+  if (!response.ok) {
+    throw new Error(`Failed to update task: ${response.status}`);
+  }
+
   return response.json();
 }
 
-function EditableCell({ title }: { title: string }) {
+function EditableCell({ tasks, setTasks, taskId }: Props) {
+  // Clean taskId from everythin before the decimal point
+  const numToString = taskId.toString();
+  const numArr = numToString.split(".");
+  const stringToNum = parseInt(numArr[1]);
+  const shortTaskId = stringToNum - 1;
+
   // States
   const [isInEditMode, setIsInEditMode] = useState<boolean>(false);
-  const [newValue, setNewValue] = useState<string>(title);
+  const [newValue, setNewValue] = useState<string>(tasks[shortTaskId].title);
 
   // Mutations
-  // const { mutateAsync: changeTaskMutation } = useMutation({
-  //   mutationFn: changeTask,
-  // });
+  const { mutateAsync: changeTaskMutation } = useMutation({
+    mutationFn: changeTask,
+  });
 
   return (
-    //TODO: maybe onmouseOver und onmouseout in die cell packen weil weniger buggy
-    //TODO: Entscheiden ob click oder mousoverw
     <>
       <TableCell>
         {isInEditMode ? (
@@ -46,8 +60,29 @@ function EditableCell({ title }: { title: string }) {
             autoFocus
             defaultValue={newValue}
             onChange={(e) => setNewValue(e.target.value)}
+            onKeyUp={(e) => {
+              if (e.key === "Enter") {
+                if (tasks[shortTaskId].title !== newValue) {
+                  //FIXME: task state update does not work yet
+                  // setTasks((prevTasks: Task[]) => {
+                  //   const updatedTask = {
+                  //     ...prevTasks[taskId],
+                  //     title: newValue,
+                  //   };
+                  //   const updatedTasks = [...prevTasks];
+                  //   updatedTasks[taskId] = updatedTask;
+                  //   return updatedTasks;
+                  // });
+                  changeTaskMutation({
+                    ...tasks[shortTaskId],
+                    title: newValue,
+                  });
+                }
+                setIsInEditMode(false);
+              }
+            }}
+            onBlur={() => setIsInEditMode(false)}
             onMouseOut={() => {
-              setIsInEditMode(false);
               // if (title) {
               // }
             }}
@@ -57,7 +92,7 @@ function EditableCell({ title }: { title: string }) {
             // onMouseOver={() => setIsInEditMode(true)}
             onClick={() => setIsInEditMode(true)}
           >
-            {title}
+            {tasks[shortTaskId].title}
           </Typography>
         )}
       </TableCell>

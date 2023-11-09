@@ -85,7 +85,7 @@ function ContentTableBody({
               />
             </TableCell>
             {/* Funktioniert noch nich */}
-            <EditableCell title={task.title} />
+            <EditableCell tasks={tasks} setTasks={setTasks} taskId={task.id} />
             <TableCell>
               {hoverOverRow.hovered && hoverOverRow.rowId === task.id && (
                 <IconButton onClick={() => handleDeleteTask(task.id)}>

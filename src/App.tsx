@@ -5,8 +5,8 @@ import { createTheme, ThemeProvider } from "@mui/material";
 import { QueryClient, QueryClientProvider } from "react-query";
 
 // Components
-import Navbar from "./components/Navbar";
-import Content from "./components/Content";
+import User from "./UserSelect";
+import Whole from "./Whole";
 
 // CSS
 import "./App.css";
@@ -22,7 +22,7 @@ const theme = createTheme({
 });
 
 function App() {
-  // State for the current Todo-List (default is 1)
+  // States
   const [selectedListIndex, setSelectedListIndex] = useState<number>(1);
   const [selectedListName, setSelectedListName] = useState<string>("");
 
@@ -30,26 +30,20 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
         <Router>
-          <div>
-            <Navbar
-              selectedListIndex={selectedListIndex}
-              setSelectedListIndex={setSelectedListIndex}
-              setSelectedListName={setSelectedListName}
-            />
-            <div className="Content">
-              <Routes>
-                <Route
-                  path="/"
-                  element={
-                    <Content
-                      selectedListIndex={selectedListIndex}
-                      selectedListName={selectedListName}
-                    />
-                  }
+          <Routes>
+            <Route path="/" element={<User />} />
+            <Route
+              path="/main"
+              element={
+                <Whole
+                  selectedListIndex={selectedListIndex}
+                  setSelectedListIndex={setSelectedListIndex}
+                  setSelectedListName={setSelectedListName}
+                  selectedListName={selectedListName}
                 />
-              </Routes>
-            </div>
-          </div>
+              }
+            />
+          </Routes>
         </Router>
       </ThemeProvider>
     </QueryClientProvider>
