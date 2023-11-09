@@ -1,3 +1,5 @@
+// TODO: Make lists deletable
+
 // Libraries
 import { useQuery } from "react-query";
 import { useEffect, useState } from "react";
@@ -55,6 +57,7 @@ function NavbarList({
   const { data, isLoading } = useQuery({
     queryFn: () =>
       fetch("http://localhost:8000/lists").then((response) => {
+        // TODO: Error Handling
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }

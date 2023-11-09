@@ -21,6 +21,7 @@ type List = {
 };
 
 // Mutation functions
+// TODO: Error Handling
 async function addList(list: List) {
   const response = await fetch("http://localhost:8000/lists", {
     method: "POST",

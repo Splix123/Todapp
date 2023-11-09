@@ -63,16 +63,13 @@ function EditableCell({ tasks, setTasks, taskId }: Props) {
             onKeyUp={(e) => {
               if (e.key === "Enter") {
                 if (tasks[shortTaskId].title !== newValue) {
-                  //FIXME: task state update does not work yet
-                  // setTasks((prevTasks: Task[]) => {
-                  //   const updatedTask = {
-                  //     ...prevTasks[taskId],
-                  //     title: newValue,
-                  //   };
-                  //   const updatedTasks = [...prevTasks];
-                  //   updatedTasks[taskId] = updatedTask;
-                  //   return updatedTasks;
-                  // });
+                  const updatedTask = {
+                    ...tasks[shortTaskId],
+                    title: newValue,
+                  };
+                  const updatedTasks = [...tasks];
+                  updatedTasks[shortTaskId] = updatedTask;
+                  setTasks(updatedTasks);
                   changeTaskMutation({
                     ...tasks[shortTaskId],
                     title: newValue,
@@ -82,10 +79,6 @@ function EditableCell({ tasks, setTasks, taskId }: Props) {
               }
             }}
             onBlur={() => setIsInEditMode(false)}
-            onMouseOut={() => {
-              // if (title) {
-              // }
-            }}
           />
         ) : (
           <Typography

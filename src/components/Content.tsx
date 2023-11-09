@@ -21,6 +21,7 @@ type Props = {
 };
 
 // Mutation functions
+// TODO: Error Handling
 async function changeCheckbox(changedTask: Task) {
   const response = await fetch(
     `http://localhost:8000/tasks/${changedTask.id}`,
@@ -49,6 +50,7 @@ function Content({ selectedListIndex, selectedListName }: Props) {
       fetch(`http://localhost:8000/tasks?id_like=${selectedListIndex}.`).then(
         (response) => {
           if (!response.ok) {
+            // TODO: Error Handling
             throw new Error("Network response was not ok");
           }
           return response.json();
@@ -79,7 +81,8 @@ function Content({ selectedListIndex, selectedListName }: Props) {
     return <ContentSkeleton />;
   }
 
-  //TODO:No Data Screen
+  // FIXME: Create Proper "No Data" Screen
+  // TODO: Add retry-button
   if (!data || data.length === 0) {
     return (
       <Typography variant="h2" textAlign="center" sx={{ marginTop: 10 }}>
