@@ -10,8 +10,8 @@ TODAP is a simple todo-list application created in order to get to know the basi
 
 ### For Version 1.0
 
-- Editable Cells finishen
-- Deletable lists
+- ~~Editable Cells finishen~~
+- ~~Deletable lists~~
 - Error handling
 - No data screen
 - UserSelectSkeleton
