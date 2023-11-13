@@ -36,6 +36,7 @@ async function changeCheckbox(changedTask: Task) {
   return response.json();
 }
 
+// Functions
 async function deleteTask(taskId: number) {
   const response = await fetch(`http://localhost:8000/tasks/${taskId}`, {
     method: "DELETE",
