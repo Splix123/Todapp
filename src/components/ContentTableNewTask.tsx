@@ -52,12 +52,12 @@ function ContentTableNewTask({ selectedListIndex, tasks, setTasks }: Props) {
               setNewTitle(e.target.value);
             }}
             onKeyUp={async (e) => {
-              const newTask: Task = {
-                id: parseFloat(`${selectedListIndex}.${tasks.length + 1}`),
-                title: newTitle,
-                checked: false,
-              };
               if (e.key === "Enter") {
+                const newTask: Task = {
+                  id: parseFloat(`${selectedListIndex}.${tasks.length + 1}`),
+                  title: newTitle,
+                  checked: false,
+                };
                 const updatedTasks = [...tasks, newTask];
                 setTasks(updatedTasks);
                 try {
