@@ -1,5 +1,3 @@
-// TODO: Make lists deletable
-
 // Libraries
 import { useMutation, useQuery } from "react-query";
 import { useEffect, useState } from "react";

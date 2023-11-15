@@ -1,4 +1,5 @@
 // Libraries
+import { split } from "lodash";
 import { useState } from "react";
 import { useMutation } from "react-query";
 import { TableCell, TextField, Typography } from "@mui/material";
@@ -36,11 +37,7 @@ async function changeTask(changedTask: Task) {
 }
 
 function EditableCell({ tasks, setTasks, taskId }: Props) {
-  // Clean taskId from everythin before the decimal point
-  const numToString = taskId.toString();
-  const numArr = numToString.split(".");
-  const stringToNum = parseInt(numArr[1]);
-  const shortTaskId = stringToNum - 1;
+  const shortTaskId = Number(split(taskId.toString(), ".")[1]) - 1;
 
   // States
   const [isInEditMode, setIsInEditMode] = useState<boolean>(false);
