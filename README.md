@@ -12,13 +12,19 @@ TODAP is a simple todo-list application created in order to get to know the basi
 
 - ~~Editable Cells finishen~~
 - ~~Deletable lists~~
-- Error handling
-- No data screen
-- UserSelectSkeleton
+- ~~UserSelectSkeleton~~
 
 ### For future Versions
 
 - Snackbar for more events
+- Error handling
+- No data screen
+- Prettify UserSelectSkeleton
+- Different db for different Users
+- Deletable Users
+- Avatar Pics
+- Prettify UserSelect
+- Display last list after deleting list
 - Retry-Button for no Data
 - Global declareFile?
 - Use [Lodash](https://lodash.com/)

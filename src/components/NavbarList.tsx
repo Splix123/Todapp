@@ -102,6 +102,7 @@ function NavbarList({
 
   const handleDeleteList = (listId: number) => {
     const updatedLists = lists.filter((list) => list.id !== listId);
+    setSelectedListIndex(1);
     setLists(updatedLists);
     deleteListMutation(listId);
   };
