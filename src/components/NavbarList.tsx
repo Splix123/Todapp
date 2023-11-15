@@ -1,4 +1,5 @@
 // Libraries
+import { filter } from "lodash";
 import { useMutation, useQuery } from "react-query";
 import { useEffect, useState } from "react";
 import {
@@ -99,7 +100,9 @@ function NavbarList({
   };
 
   const handleDeleteList = (listId: number) => {
-    const updatedLists = lists.filter((list) => list.id !== listId);
+    const updatedLists = filter(lists, function (list) {
+      return list.id !== listId;
+    });
     setSelectedListIndex(1);
     setLists(updatedLists);
     deleteListMutation(listId);
