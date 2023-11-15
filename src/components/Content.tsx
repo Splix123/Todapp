@@ -83,6 +83,7 @@ function Content({ selectedListIndex, selectedListName }: Props) {
   }
 
   // FIXME: Create Proper "No Data" Screen
+  // FIXME: Use the status from React-Query instead of data.lenght === 0
   // TODO: Add retry-button
   if (!data || data.length === 0) {
     return (

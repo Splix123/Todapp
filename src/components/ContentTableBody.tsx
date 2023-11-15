@@ -1,4 +1,5 @@
 // Libraries
+import { filter } from "lodash";
 import { useState } from "react";
 import {
   TableBody,
@@ -57,7 +58,9 @@ function ContentTableBody({
   };
 
   const handleDeleteTask = (taskId: number) => {
-    const updatedTasks = tasks.filter((task) => task.id !== taskId);
+    const updatedTasks = filter(tasks, function (task: Task) {
+      return task.id !== taskId;
+    });
     setTasks(updatedTasks);
     deleteTaskMutation(taskId);
   };
@@ -84,7 +87,6 @@ function ContentTableBody({
                 onChange={() => handleCheckboxChange(task.id)}
               />
             </TableCell>
-            {/* Funktioniert noch nich */}
             <EditableCell tasks={tasks} setTasks={setTasks} taskId={task.id} />
             <TableCell>
               {hoverOverRow.hovered && hoverOverRow.rowId === task.id && (

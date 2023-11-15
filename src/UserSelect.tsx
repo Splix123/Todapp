@@ -27,7 +27,6 @@ function UserSelect() {
   });
 
   if (isLoading) {
-    // TODO: Skeleton machen
     return <UserSelectSkeleton />;
   }
 

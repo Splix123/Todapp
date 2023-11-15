@@ -18,6 +18,7 @@ function AddUser({ timeout }: Props) {
         {...{ timeout: timeout }}
       >
         <IconButton color="success">
+          {/* FIXME: user.name */}
           <Avatar alt="{user.name}" sx={{ height: 120, width: 120 }}>
             <PersonAddAlt1Icon sx={{ height: 40, width: 40 }} />
           </Avatar>
