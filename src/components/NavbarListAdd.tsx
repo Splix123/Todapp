@@ -1,4 +1,5 @@
 // Libraries
+import { random } from "lodash";
 import { useMutation } from "react-query";
 import { useState } from "react";
 import { IconButton, ListItem, ListItemText, TextField } from "@mui/material";
@@ -56,7 +57,7 @@ function NavbarListAdd({
     const newList = {
       id: lists.length + 1,
       label: newTitle,
-      icon: Math.floor(Math.random() * iconsLength),
+      icon: random(0, iconsLength - 1),
     };
     const updatedLists = [...lists, newList];
     setLists(updatedLists);
