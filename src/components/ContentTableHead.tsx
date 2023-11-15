@@ -1,4 +1,5 @@
 // Libraries
+import { some, every, map, filter, forEach } from "lodash";
 import { useEffect, useState } from "react";
 import {
   TableHead,
@@ -41,8 +42,8 @@ function ContentTableHead({
     useState<boolean>(false);
 
   // Effects
-  const someTasksChecked = tasks.some((task) => task.checked);
-  const everyTaskChecked = tasks.every((task) => task.checked);
+  const someTasksChecked = some(tasks, "checked");
+  const everyTaskChecked = every(tasks, "checked");
   useEffect(() => {
     setParentCheckboxChecked(everyTaskChecked);
   }, [everyTaskChecked]);
@@ -54,20 +55,20 @@ function ContentTableHead({
   // Handlers
   const handleParentCheckboxChange = () => {
     setParentCheckboxChecked(!parentCheckboxChecked);
-    const updatedTasks = tasks.map((task) => ({
+    const updatedTasks = map(tasks, (task) => ({
       ...task,
       checked: !parentCheckboxChecked,
     }));
     setTasks(updatedTasks);
-    tasks.map((task) => {
+    forEach(tasks, (task) => {
       changeCheckboxMutation({ ...task, checked: !parentCheckboxChecked });
     });
   };
 
   const handleDeleteAllTasks = () => {
-    const updatetTasks = tasks.filter((task) => !task.checked);
-    setTasks(updatetTasks);
-    tasks.map((task) => {
+    const updatedTasks = filter(tasks, (task) => !task.checked);
+    setTasks(updatedTasks);
+    forEach(tasks, (task) => {
       if (task.checked === true) {
         deleteTaskMutation(task.id);
       }
