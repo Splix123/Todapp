@@ -13,6 +13,7 @@ TODAP is a simple todo-list application created in order to get to know the basi
 ## For future Versions
 
 - Snackbar for more events
+- List name for first list
 - Error handling
 - No data screen
 - Prettify UserSelectSkeleton
@@ -23,5 +24,5 @@ TODAP is a simple todo-list application created in order to get to know the basi
 - Display last list after deleting list
 - Retry-Button for no Data
 - Global declareFile?
-- Use [Lodash](https://lodash.com/)
+- ~~Use [Lodash](https://lodash.com/)~~
 - Use [Zustand](https://docs.pmnd.rs/zustand/getting-started/introduction)

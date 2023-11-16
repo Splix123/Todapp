@@ -5,6 +5,7 @@ import { Table, TableContainer, Typography } from "@mui/material";
 
 //Components
 import ContentSkeleton from "./ContentSkeleton";
+import ContentError from "./ContentError";
 import ContentTableHead from "./ContentTableHead";
 import ContentTableBody from "./ContentTableBody";
 
@@ -46,7 +47,7 @@ async function deleteTask(taskId: number) {
 
 function Content({ selectedListIndex, selectedListName }: Props) {
   //Fetch data
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryFn: () =>
       fetch(`http://localhost:8000/tasks?id_like=${selectedListIndex}.`).then(
         (response) => {
@@ -77,49 +78,42 @@ function Content({ selectedListIndex, selectedListName }: Props) {
     }
   }, [isLoading, data]);
 
-  // Loading screen
-  if (isLoading) {
-    return <ContentSkeleton />;
-  }
-
-  // FIXME: Create Proper "No Data" Screen
-  // FIXME: Use the status from React-Query instead of data.lenght === 0
-  // TODO: Add retry-button
-  if (!data || data.length === 0) {
-    return (
-      <Typography variant="h2" textAlign="center" sx={{ marginTop: 10 }}>
-        Sorry something is not working correctly
-      </Typography>
-    );
-  }
-
   return (
-    <div style={{ marginLeft: "350px" }}>
-      <Typography
-        variant="h3"
-        fontWeight="light"
-        paddingTop={3}
-        paddingBottom={5}
-      >
-        {selectedListName}
-      </Typography>
-      <TableContainer sx={{ borderRadius: 1 }}>
-        <Table stickyHeader aria-label="sticky table">
-          <ContentTableHead
-            tasks={tasks}
-            setTasks={setTasks}
-            changeCheckboxMutation={changeCheckboxMutation}
-            deleteTaskMutation={deleteTaskMutation}
-          />
-          <ContentTableBody
-            selectedListIndex={selectedListIndex}
-            tasks={tasks}
-            setTasks={setTasks}
-            changeCheckboxMutation={changeCheckboxMutation}
-            deleteTaskMutation={deleteTaskMutation}
-          />
-        </Table>
-      </TableContainer>
+    <div style={{ marginLeft: "350px", marginTop: "100px" }}>
+      {isLoading && <ContentSkeleton />}
+
+      {isError && <ContentError />}
+
+      {!isLoading && !isError && (
+        <div>
+          {/* BUG: No listName for the first list displayed */}
+          <Typography
+            variant="h3"
+            fontWeight="light"
+            paddingTop={3}
+            paddingBottom={5}
+          >
+            {selectedListName}
+          </Typography>
+          <TableContainer sx={{ borderRadius: 1 }}>
+            <Table stickyHeader aria-label="sticky table">
+              <ContentTableHead
+                tasks={tasks}
+                setTasks={setTasks}
+                changeCheckboxMutation={changeCheckboxMutation}
+                deleteTaskMutation={deleteTaskMutation}
+              />
+              <ContentTableBody
+                selectedListIndex={selectedListIndex}
+                tasks={tasks}
+                setTasks={setTasks}
+                changeCheckboxMutation={changeCheckboxMutation}
+                deleteTaskMutation={deleteTaskMutation}
+              />
+            </Table>
+          </TableContainer>
+        </div>
+      )}
     </div>
   );
 }
