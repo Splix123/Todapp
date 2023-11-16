@@ -4,11 +4,13 @@
 
 TODAP is a simple todo-list application created in order to get to know the basics of [React.js](https://react.dev/) aswell as different useful libraries like [ReactRouter](https://reactrouter.com/en/main), [ReactQuery](https://tanstack.com/query/latest) or the [MaterialUI](https://mui.com/).
 
+## Screenshots
+
+![Screenshot of the app](public/MainScreen.png "Main Screen")
+
 ---
 
-## TODO:
-
-### For future Versions
+## For future Versions
 
 - Snackbar for more events
 - Error handling
