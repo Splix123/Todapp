@@ -47,13 +47,12 @@ async function deleteTask(taskId: number) {
 
 function Content({ selectedListIndex, selectedListName }: Props) {
   //Fetch data
-  const { data, isLoading, isError } = useQuery({
+  const { data, isLoading, isError, refetch } = useQuery({
     queryFn: () =>
       fetch(`http://localhost:8000/tasks?id_like=${selectedListIndex}.`).then(
         (response) => {
           if (!response.ok) {
-            // TODO: Error Handling
-            throw new Error("Network response was not ok");
+            throw new Error("Could not load tasks properly");
           }
           return response.json();
         }
@@ -79,10 +78,12 @@ function Content({ selectedListIndex, selectedListName }: Props) {
   }, [isLoading, data]);
 
   return (
-    <div style={{ marginLeft: "350px", marginTop: "100px" }}>
+    <div
+      style={{ marginLeft: "350px", marginTop: "100px", marginRight: "50px" }}
+    >
       {isLoading && <ContentSkeleton />}
 
-      {isError && <ContentError />}
+      {isError && <ContentError refetchFn={refetch} />}
 
       {!isLoading && !isError && (
         <div>

@@ -9,6 +9,7 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Typography,
 } from "@mui/material";
 
 // Components
@@ -63,7 +64,7 @@ function NavbarList({
   setSnackbarOpen,
 }: Props) {
   // Fetching the List DB
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryFn: () =>
       fetch("http://localhost:8000/lists").then((response) => {
         // TODO: Error Handling
@@ -114,36 +115,46 @@ function NavbarList({
   }
 
   return (
-    <List>
-      {lists.map((list: List) => (
-        <ListItemButton
-          key={list.id}
-          selected={selectedListIndex === list.id}
-          onClick={() => handleListItemClick(list.id)}
-          onMouseOver={() =>
-            setHoverOverList({ listId: list.id, hovered: true })
-          }
-          onMouseOut={() =>
-            setHoverOverList({ listId: list.id, hovered: false })
-          }
-        >
-          <ListItemIcon>{icons[list.icon]}</ListItemIcon>
-          <ListItemText primary={list.label} />
-          {hoverOverList.hovered && hoverOverList.listId === list.id && (
-            <IconButton onClick={() => handleDeleteList(list.id)}>
-              <DeleteIcon />
-            </IconButton>
-          )}
-        </ListItemButton>
-      ))}
-      <Divider style={{ margin: "10px" }} />
-      <NavbarListAdd
-        lists={lists}
-        setLists={setLists}
-        iconsLength={icons.length}
-        setSnackbarOpen={setSnackbarOpen}
-      />
-    </List>
+    <>
+      {isLoading && <NavbarListSkeleton />}
+
+      {isError && (
+        <Typography variant="h6" textAlign="center">
+          Can't reach TODAP-server
+        </Typography>
+      )}
+
+      <List>
+        {lists.map((list: List) => (
+          <ListItemButton
+            key={list.id}
+            selected={selectedListIndex === list.id}
+            onClick={() => handleListItemClick(list.id)}
+            onMouseOver={() =>
+              setHoverOverList({ listId: list.id, hovered: true })
+            }
+            onMouseOut={() =>
+              setHoverOverList({ listId: list.id, hovered: false })
+            }
+          >
+            <ListItemIcon>{icons[list.icon]}</ListItemIcon>
+            <ListItemText primary={list.label} />
+            {hoverOverList.hovered && hoverOverList.listId === list.id && (
+              <IconButton onClick={() => handleDeleteList(list.id)}>
+                <DeleteIcon />
+              </IconButton>
+            )}
+          </ListItemButton>
+        ))}
+        <Divider style={{ margin: "10px" }} />
+        <NavbarListAdd
+          lists={lists}
+          setLists={setLists}
+          iconsLength={icons.length}
+          setSnackbarOpen={setSnackbarOpen}
+        />
+      </List>
+    </>
   );
 }
 
