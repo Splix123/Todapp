@@ -67,10 +67,6 @@ function NavbarList({
   const { data, isLoading, isError } = useQuery({
     queryFn: () =>
       fetch("http://localhost:8000/lists").then((response) => {
-        // TODO: Error Handling
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
         return response.json();
       }),
     queryKey: ["lists"],

@@ -37,7 +37,6 @@ async function changeCheckbox(changedTask: Task) {
   return response.json();
 }
 
-// Functions
 async function deleteTask(taskId: number) {
   const response = await fetch(`http://localhost:8000/tasks/${taskId}`, {
     method: "DELETE",
@@ -51,9 +50,6 @@ function Content({ selectedListIndex, selectedListName }: Props) {
     queryFn: () =>
       fetch(`http://localhost:8000/tasks?id_like=${selectedListIndex}.`).then(
         (response) => {
-          if (!response.ok) {
-            throw new Error("Could not load tasks properly");
-          }
           return response.json();
         }
       ),
