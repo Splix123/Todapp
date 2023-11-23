@@ -14,15 +14,15 @@ TODAP is a simple todo-list application created in order to get to know the basi
 
 - Snackbar for more events
 - List name for first list
-- Error handling
-- No data screen
+- ~~Error handling~~
+- ~~No data screen~~
 - Prettify UserSelectSkeleton
 - Different db for different Users
 - Deletable Users
 - Avatar Pics
 - Prettify UserSelect
 - Display last list after deleting list
-- Retry-Button for no Data
+- ~~Retry-Button for no Data~~
 - Global declareFile?
 - ~~Use [Lodash](https://lodash.com/)~~
 - Use [Zustand](https://docs.pmnd.rs/zustand/getting-started/introduction)
