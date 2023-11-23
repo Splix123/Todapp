@@ -13,6 +13,12 @@ type Props = {
   setSelectedListName: (name: string) => void;
 };
 
+type Snackbar = {
+  open: boolean;
+  severity: "success" | "info" | "error" | "warning";
+  text: string;
+};
+
 // Constants
 const DRAWER_WIDTH = 300;
 
@@ -22,7 +28,11 @@ function Navbar({
   setSelectedListName,
 }: Props) {
   // States
-  const [snackbarOpen, setSnackbaropen] = useState<boolean>(false);
+  const [snackbar, setSnackbar] = useState<Snackbar>({
+    open: false,
+    severity: "success",
+    text: "",
+  });
 
   return (
     <Drawer
@@ -47,9 +57,14 @@ function Navbar({
         selectedListIndex={selectedListIndex}
         setSelectedListIndex={setSelectedListIndex}
         setSelectedListName={setSelectedListName}
-        setSnackbarOpen={setSnackbaropen}
+        setSnackbar={setSnackbar}
       />
-      <CustomSnackbar snackbarOpen={snackbarOpen} />
+      <CustomSnackbar
+        open={snackbar.open}
+        severity={snackbar.severity}
+        text={snackbar.text}
+        setSnackbar={setSnackbar}
+      />
     </Drawer>
   );
 }

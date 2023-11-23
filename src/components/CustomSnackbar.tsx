@@ -2,23 +2,40 @@
 import { Alert, Snackbar } from "@mui/material";
 
 // Types
-type Props = {
-  snackbarOpen: boolean;
+type Snackbar = {
+  open: boolean;
+  severity: "success" | "info" | "error" | "warning";
+  text: string;
 };
 
-function CustomSnackbar({ snackbarOpen }: Props) {
+type Props = {
+  open: boolean;
+  severity: "success" | "info" | "error" | "warning";
+  text: string;
+  setSnackbar: (newSnackbar: Snackbar) => void;
+};
+
+function CustomSnackbar({ open, severity, text, setSnackbar }: Props) {
+  // Handlers
+  const closeSnackbar = () => {
+    setSnackbar({ open: false, severity: "success", text: "" });
+  };
+
+  if (open) {
+    setTimeout(closeSnackbar, 2500);
+  }
   return (
     <>
-      <Snackbar open={snackbarOpen}>
+      <Snackbar open={open}>
         <Alert
-          severity="success"
+          severity={severity}
           sx={{
             width: "100%",
             backgroundColor: "#388e3c",
             fontWeight: "bold",
           }}
         >
-          Created List!
+          {text}
         </Alert>
       </Snackbar>
     </>

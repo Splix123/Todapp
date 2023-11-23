@@ -22,7 +22,6 @@ type Props = {
 };
 
 // Mutation functions
-// TODO: Error Handling
 async function changeCheckbox(changedTask: Task) {
   const response = await fetch(
     `http://localhost:8000/tasks/${changedTask.id}`,

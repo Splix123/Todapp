@@ -8,11 +8,17 @@ import { IconButton, ListItem, ListItemText, TextField } from "@mui/material";
 import ControlPointIcon from "@mui/icons-material/ControlPoint";
 
 // Types
+type Snackbar = {
+  open: boolean;
+  severity: "success" | "info" | "error" | "warning";
+  text: string;
+};
+
 type Props = {
   lists: List[];
   setLists: (newLists: List[]) => void;
   iconsLength: number;
-  setSnackbarOpen: (open: boolean) => void;
+  setSnackbar: (newSnackbar: Snackbar) => void;
 };
 
 type List = {
@@ -34,12 +40,7 @@ async function addList(list: List) {
   return response.json();
 }
 
-function NavbarListAdd({
-  lists,
-  setLists,
-  iconsLength,
-  setSnackbarOpen,
-}: Props) {
+function NavbarListAdd({ lists, setLists, iconsLength, setSnackbar }: Props) {
   //Mutations
   const { mutateAsync: addListMutation } = useMutation({
     mutationFn: addList,
@@ -49,10 +50,6 @@ function NavbarListAdd({
   const [newTitle, setNewTitle] = useState<string>("");
 
   // Handlers
-  const snackbarClose = () => {
-    setSnackbarOpen(false);
-  };
-
   const handleNewList = () => {
     const newList = {
       id: lists.length + 1,
@@ -62,8 +59,8 @@ function NavbarListAdd({
     const updatedLists = [...lists, newList];
     setLists(updatedLists);
     addListMutation(newList);
-    setSnackbarOpen(true);
-    setTimeout(snackbarClose, 2500);
+    setSnackbar({ open: true, severity: "success", text: "Created List!" });
+    // setTimeout(snackbarClose, 2500);
     setNewTitle("");
   };
 

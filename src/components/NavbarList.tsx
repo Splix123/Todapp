@@ -32,11 +32,17 @@ type List = {
   icon: number;
 };
 
+type Snackbar = {
+  open: boolean;
+  severity: "success" | "info" | "error" | "warning";
+  text: string;
+};
+
 type Props = {
   selectedListIndex: number;
   setSelectedListIndex: (index: number) => void;
   setSelectedListName: (name: string) => void;
-  setSnackbarOpen: (open: boolean) => void;
+  setSnackbar: (newSnackbar: Snackbar) => void;
 };
 
 // Icons
@@ -61,7 +67,7 @@ function NavbarList({
   selectedListIndex,
   setSelectedListIndex,
   setSelectedListName,
-  setSnackbarOpen,
+  setSnackbar,
 }: Props) {
   // Fetching the List DB
   const { data, isLoading, isError } = useQuery({
@@ -103,6 +109,7 @@ function NavbarList({
     setSelectedListIndex(1);
     setLists(updatedLists);
     deleteListMutation(listId);
+    setSnackbar({});
   };
 
   //Loading screen
@@ -147,7 +154,7 @@ function NavbarList({
           lists={lists}
           setLists={setLists}
           iconsLength={icons.length}
-          setSnackbarOpen={setSnackbarOpen}
+          setSnackbar={setSnackbar}
         />
       </List>
     </>
