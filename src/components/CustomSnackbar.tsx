@@ -15,6 +15,14 @@ type Props = {
   setSnackbar: (newSnackbar: Snackbar) => void;
 };
 
+// TODO: put in the right colors
+const snackbarColors = {
+  success: "#388e3c",
+  info: "#0288d1",
+  error: "#d32f2f",
+  warning: "#f57b00",
+};
+
 function CustomSnackbar({ open, severity, text, setSnackbar }: Props) {
   // Handlers
   const closeSnackbar = () => {
@@ -31,7 +39,7 @@ function CustomSnackbar({ open, severity, text, setSnackbar }: Props) {
           severity={severity}
           sx={{
             width: "100%",
-            backgroundColor: "#388e3c",
+            backgroundColor: snackbarColors[severity],
             fontWeight: "bold",
           }}
         >

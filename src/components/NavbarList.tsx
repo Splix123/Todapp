@@ -109,7 +109,7 @@ function NavbarList({
     setSelectedListIndex(1);
     setLists(updatedLists);
     deleteListMutation(listId);
-    setSnackbar({});
+    setSnackbar({ open: true, severity: "warning", text: "Deleted List!" });
   };
 
   //Loading screen

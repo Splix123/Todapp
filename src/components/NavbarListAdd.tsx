@@ -60,7 +60,6 @@ function NavbarListAdd({ lists, setLists, iconsLength, setSnackbar }: Props) {
     setLists(updatedLists);
     addListMutation(newList);
     setSnackbar({ open: true, severity: "success", text: "Created List!" });
-    // setTimeout(snackbarClose, 2500);
     setNewTitle("");
   };
 
