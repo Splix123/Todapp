@@ -15,11 +15,7 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 
 // Types
-type Task = {
-  id: number;
-  title: string;
-  checked: boolean;
-};
+import { Task } from "../../types.d";
 
 type Props = {
   tasks: Task[];

@@ -26,11 +26,7 @@ import ElectricBoltIcon from "@mui/icons-material/ElectricBolt";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 // Types
-type List = {
-  id: number;
-  label: string;
-  icon: number;
-};
+import { List as TList } from "../../types.d";
 
 type Props = {
   selectedListIndex: number;
@@ -78,7 +74,7 @@ function NavbarList({
   });
 
   // States
-  const [lists, setLists] = useState<List[]>([]);
+  const [lists, setLists] = useState<TList[]>([]);
   useEffect(() => {
     if (!isLoading && data) {
       setLists(data);
@@ -121,7 +117,7 @@ function NavbarList({
       )}
 
       <List>
-        {lists.map((list: List) => (
+        {lists.map((list: TList) => (
           <ListItemButton
             key={list.id}
             selected={selectedListIndex === list.id}

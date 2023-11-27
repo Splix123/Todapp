@@ -8,17 +8,13 @@ import { IconButton, ListItem, ListItemText, TextField } from "@mui/material";
 import ControlPointIcon from "@mui/icons-material/ControlPoint";
 
 // Types
+import { List } from "../../types.d";
+
 type Props = {
   lists: List[];
   setLists: (newLists: List[]) => void;
   iconsLength: number;
   setSnackbarOpen: (open: boolean) => void;
-};
-
-type List = {
-  id: number;
-  label: string;
-  icon: number;
 };
 
 // Mutation functions

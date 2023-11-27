@@ -5,11 +5,7 @@ import { useMutation } from "react-query";
 import { TableCell, TextField, Typography } from "@mui/material";
 
 // Types
-type Task = {
-  id: number;
-  title: string;
-  checked: boolean;
-};
+import { Task } from "../../types.d";
 
 type Props = {
   tasks: Task[];

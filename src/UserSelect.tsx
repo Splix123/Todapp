@@ -7,10 +7,7 @@ import UserSelectSkeleton from "./components/UserSelectSkeleton";
 import AddUser from "./components/AddUser";
 
 // Types
-type User = {
-  id: number;
-  name: string;
-};
+import { User } from "../types.d";
 
 function UserSelect() {
   //Fetch data

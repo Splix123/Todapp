@@ -4,11 +4,7 @@ import { useMutation } from "react-query";
 import { TableRow, TableCell, Checkbox, TextField } from "@mui/material";
 
 // Types
-type Task = {
-  id: number;
-  title: string;
-  checked: boolean;
-};
+import { Task } from "../../types.d";
 
 type Props = {
   selectedListIndex: number;
