@@ -23,6 +23,6 @@ TODAP is a simple todo-list application created in order to get to know the basi
 - Prettify UserSelect
 - Display last list after deleting list
 - ~~Retry-Button for no Data~~
-- Global declareFile?
+- ~~Global declareFile?~~
 - ~~Use [Lodash](https://lodash.com/)~~
 - Use [Zustand](https://docs.pmnd.rs/zustand/getting-started/introduction)
