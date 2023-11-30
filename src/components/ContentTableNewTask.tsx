@@ -6,12 +6,9 @@ import { TableRow, TableCell, Checkbox, TextField } from "@mui/material";
 // Types
 import { Task } from "../../types.d";
 
-type Props = {
-  selectedListIndex: number;
-};
-
 // Stores
 import taskStore from "../store/taskStore";
+import listStore from "../store/listStore";
 
 // Mutation functions
 async function addTaskFunction(newTask: Task) {
@@ -25,9 +22,10 @@ async function addTaskFunction(newTask: Task) {
   return response.json();
 }
 
-function ContentTableNewTask({ selectedListIndex }: Props) {
+function ContentTableNewTask() {
   // States
   const { tasks, addTask } = taskStore();
+  const { currentList } = listStore();
   const [newTitle, setNewTitle] = useState<string>("");
 
   // Mutations
@@ -52,7 +50,7 @@ function ContentTableNewTask({ selectedListIndex }: Props) {
             onKeyUp={async (e) => {
               if (e.key === "Enter") {
                 const newTask: Task = {
-                  id: parseFloat(`${selectedListIndex}.${tasks.length + 1}`),
+                  id: parseFloat(`${currentList}.${tasks.length + 1}`),
                   title: newTitle,
                   checked: false,
                 };

@@ -1,4 +1,5 @@
 // Libraries
+import { useEffect } from "react";
 import { useMutation, useQuery } from "react-query";
 import { Table, TableContainer, Typography } from "@mui/material";
 
@@ -11,14 +12,9 @@ import ContentTableBody from "./ContentTableBody";
 // Types
 import { Task } from "../../types.d";
 
-type Props = {
-  selectedListIndex: number;
-  selectedListName: string;
-};
-
 // Stores
 import taskStore from "../store/taskStore";
-import { useEffect } from "react";
+import listStore from "../store/listStore";
 
 // Mutation functions
 async function changeCheckbox(changedTask: Task) {
@@ -42,16 +38,19 @@ async function deleteTask(taskId: number) {
   return response.json();
 }
 
-function Content({ selectedListIndex, selectedListName }: Props) {
+function Content() {
+  // ListState for fetching th reight data
+  const { lists, currentList } = listStore();
+
   //Fetch data
   const { data, isLoading, isError, refetch } = useQuery({
     queryFn: () =>
-      fetch(`http://localhost:8000/tasks?id_like=${selectedListIndex}.`).then(
+      fetch(`http://localhost:8000/tasks?id_like=${currentList}.`).then(
         (response) => {
           return response.json();
         }
       ),
-    queryKey: ["tasks", selectedListIndex],
+    queryKey: ["tasks", currentList],
   });
 
   //Mutations
@@ -81,14 +80,13 @@ function Content({ selectedListIndex, selectedListName }: Props) {
 
       {!isLoading && !isError && (
         <div>
-          {/* BUG: No listName for the first list displayed */}
           <Typography
             variant="h3"
             fontWeight="light"
             paddingTop={3}
             paddingBottom={5}
           >
-            {selectedListName}
+            {lists[currentList - 1].label}
           </Typography>
           <TableContainer sx={{ borderRadius: 1 }}>
             <Table stickyHeader aria-label="sticky table">
@@ -97,7 +95,6 @@ function Content({ selectedListIndex, selectedListName }: Props) {
                 deleteTaskMutation={deleteTaskMutation}
               />
               <ContentTableBody
-                selectedListIndex={selectedListIndex}
                 changeCheckboxMutation={changeCheckboxMutation}
                 deleteTaskMutation={deleteTaskMutation}
               />

@@ -10,6 +10,8 @@ type StoreType = {
   setLists: (data: List[]) => void;
   addList: (newList: List) => void;
   removeList: (listId: number) => void;
+  currentList: number;
+  setCurrentList: (listId: number) => void;
 };
 
 const useStore = create<StoreType>((set) => ({
@@ -20,6 +22,8 @@ const useStore = create<StoreType>((set) => ({
     set((state) => ({
       lists: filter(state.lists, (list) => list.id !== listId),
     })),
+  currentList: 1,
+  setCurrentList: (listId) => set({ currentList: listId }),
 }));
 
 export default useStore;

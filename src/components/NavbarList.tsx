@@ -27,15 +27,12 @@ import DeleteIcon from "@mui/icons-material/Delete";
 // Types
 import { List as TList } from "../../types.d";
 
-// Stores
-import listStore from "../store/listStore";
-
 type Props = {
-  selectedListIndex: number;
-  setSelectedListIndex: (index: number) => void;
-  setSelectedListName: (name: string) => void;
   setSnackbarOpen: (open: boolean) => void;
 };
+
+// Stores
+import listStore from "../store/listStore";
 
 // Icons
 const icons = [
@@ -55,12 +52,7 @@ async function deleteList(listId: number) {
   return response.json();
 }
 
-function NavbarList({
-  selectedListIndex,
-  setSelectedListIndex,
-  setSelectedListName,
-  setSnackbarOpen,
-}: Props) {
+function NavbarList({ setSnackbarOpen }: Props) {
   // Fetching Data
   const { data, isLoading, isError } = useQuery({
     queryFn: () =>
@@ -76,7 +68,8 @@ function NavbarList({
   });
 
   // States
-  const { lists, setLists, removeList } = listStore();
+  const { lists, setLists, removeList, currentList, setCurrentList } =
+    listStore();
   useEffect(() => {
     if (!isLoading && data) {
       setLists(data);
@@ -90,12 +83,11 @@ function NavbarList({
 
   // Handlers
   const handleListItemClick = (index: number) => {
-    setSelectedListIndex(index);
-    setSelectedListName(lists[index - 1].label);
+    setCurrentList(index);
   };
 
   const handleDeleteList = (listId: number) => {
-    setSelectedListIndex(1);
+    setCurrentList(1);
     removeList(listId);
     deleteListMutation(listId);
   };
@@ -119,7 +111,7 @@ function NavbarList({
         {lists.map((list: TList) => (
           <ListItemButton
             key={list.id}
-            selected={selectedListIndex === list.id}
+            selected={currentList === list.id}
             onClick={() => handleListItemClick(list.id)}
             onMouseOver={() =>
               setHoverOverList({ listId: list.id, hovered: true })

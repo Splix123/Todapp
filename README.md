@@ -21,7 +21,7 @@ TODAP is a simple todo-list application created in order to get to know the basi
 - Deletable Users
 - Avatar Pics
 - Prettify UserSelect
-- Display last list after deleting list
+- ~~Display last list after deleting list~~
 - ~~Retry-Button for no Data~~
 - ~~Global declareFile?~~
 - ~~Use [Lodash](https://lodash.com/)~~

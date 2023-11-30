@@ -6,21 +6,10 @@ import { Drawer, Typography } from "@mui/material";
 import NavbarList from "./NavbarList";
 import CustomSnackbar from "./CustomSnackbar";
 
-// Types
-type Props = {
-  selectedListIndex: number;
-  setSelectedListIndex: (index: number) => void;
-  setSelectedListName: (name: string) => void;
-};
-
 // Constants
 const DRAWER_WIDTH = 300;
 
-function Navbar({
-  selectedListIndex,
-  setSelectedListIndex,
-  setSelectedListName,
-}: Props) {
+function Navbar() {
   // States
   const [snackbarOpen, setSnackbaropen] = useState<boolean>(false);
 
@@ -43,12 +32,7 @@ function Navbar({
       >
         TODAP
       </Typography>
-      <NavbarList
-        selectedListIndex={selectedListIndex}
-        setSelectedListIndex={setSelectedListIndex}
-        setSelectedListName={setSelectedListName}
-        setSnackbarOpen={setSnackbaropen}
-      />
+      <NavbarList setSnackbarOpen={setSnackbaropen} />
       <CustomSnackbar snackbarOpen={snackbarOpen} />
     </Drawer>
   );

@@ -19,7 +19,6 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { Task } from "../../types.d";
 
 type Props = {
-  selectedListIndex: number;
   changeCheckboxMutation: (changedTask: Task) => void;
   deleteTaskMutation: (taskId: number) => void;
 };
@@ -28,13 +27,11 @@ type Props = {
 import taskStore from "../store/taskStore";
 
 function ContentTableBody({
-  selectedListIndex,
   changeCheckboxMutation,
   deleteTaskMutation,
 }: Props) {
   // States
   const { tasks, removeTask, checkTask } = taskStore();
-
   const [hoverOverRow, setHoverOverRow] = useState({
     rowId: 0,
     hovered: false,
@@ -88,7 +85,7 @@ function ContentTableBody({
             </TableCell>
           </TableRow>
         ))}
-        <ContentTableNewTask selectedListIndex={selectedListIndex} />
+        <ContentTableNewTask />
       </TableBody>
     </>
   );
