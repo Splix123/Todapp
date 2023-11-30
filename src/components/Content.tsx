@@ -1,6 +1,5 @@
 // Libraries
 import { useMutation, useQuery } from "react-query";
-import { useEffect, useState } from "react";
 import { Table, TableContainer, Typography } from "@mui/material";
 
 //Components
@@ -17,8 +16,10 @@ type Props = {
   selectedListName: string;
 };
 
+// Stores
+import taskStore from "../store/taskStore";
+
 // Mutation functions
-// TODO: Error Handling
 async function changeCheckbox(changedTask: Task) {
   const response = await fetch(
     `http://localhost:8000/tasks/${changedTask.id}`,
@@ -62,12 +63,8 @@ function Content({ selectedListIndex, selectedListName }: Props) {
   });
 
   // States
-  const [tasks, setTasks] = useState<Task[]>([]);
-  useEffect(() => {
-    if (!isLoading && data) {
-      setTasks(data);
-    }
-  }, [isLoading, data]);
+  const { setTasks } = taskStore();
+  setTasks(data);
 
   return (
     <div
@@ -91,15 +88,11 @@ function Content({ selectedListIndex, selectedListName }: Props) {
           <TableContainer sx={{ borderRadius: 1 }}>
             <Table stickyHeader aria-label="sticky table">
               <ContentTableHead
-                tasks={tasks}
-                setTasks={setTasks}
                 changeCheckboxMutation={changeCheckboxMutation}
                 deleteTaskMutation={deleteTaskMutation}
               />
               <ContentTableBody
                 selectedListIndex={selectedListIndex}
-                tasks={tasks}
-                setTasks={setTasks}
                 changeCheckboxMutation={changeCheckboxMutation}
                 deleteTaskMutation={deleteTaskMutation}
               />

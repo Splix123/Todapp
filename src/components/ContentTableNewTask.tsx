@@ -8,12 +8,13 @@ import { Task } from "../../types.d";
 
 type Props = {
   selectedListIndex: number;
-  tasks: Task[];
-  setTasks: (newTasks: Task[]) => void;
 };
 
+// Stores
+import taskStore from "../store/taskStore";
+
 // Mutation functions
-async function addTask(newTask: Task) {
+async function addTaskFunction(newTask: Task) {
   const response = await fetch("http://localhost:8000/tasks", {
     method: "POST",
     headers: {
@@ -24,13 +25,14 @@ async function addTask(newTask: Task) {
   return response.json();
 }
 
-function ContentTableNewTask({ selectedListIndex, tasks, setTasks }: Props) {
+function ContentTableNewTask({ selectedListIndex }: Props) {
   // States
+  const { tasks, addTask } = taskStore();
   const [newTitle, setNewTitle] = useState<string>("");
 
   // Mutations
   const { mutateAsync: addTodoMutation } = useMutation({
-    mutationFn: addTask,
+    mutationFn: addTaskFunction,
   });
 
   return (
@@ -54,13 +56,8 @@ function ContentTableNewTask({ selectedListIndex, tasks, setTasks }: Props) {
                   title: newTitle,
                   checked: false,
                 };
-                const updatedTasks = [...tasks, newTask];
-                setTasks(updatedTasks);
-                try {
-                  addTodoMutation(newTask);
-                } catch (error) {
-                  console.log(error);
-                }
+                addTask(newTask);
+                addTodoMutation(newTask);
                 setNewTitle("");
               }
             }}

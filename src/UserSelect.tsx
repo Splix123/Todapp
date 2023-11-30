@@ -14,10 +14,6 @@ function UserSelect() {
   const { data: users, isLoading } = useQuery({
     queryFn: () =>
       fetch(`http://localhost:8000/users`).then((response) => {
-        if (!response.ok) {
-          // TODO: Error Handling
-          throw new Error("Network response was not ok");
-        }
         return response.json();
       }),
     queryKey: ["users"],
