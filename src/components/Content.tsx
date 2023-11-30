@@ -18,6 +18,7 @@ type Props = {
 
 // Stores
 import taskStore from "../store/taskStore";
+import { useEffect } from "react";
 
 // Mutation functions
 async function changeCheckbox(changedTask: Task) {
@@ -64,7 +65,11 @@ function Content({ selectedListIndex, selectedListName }: Props) {
 
   // States
   const { setTasks } = taskStore();
-  setTasks(data);
+  useEffect(() => {
+    if (!isLoading && data) {
+      setTasks(data);
+    }
+  }, [isLoading, data, setTasks]);
 
   return (
     <div

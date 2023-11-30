@@ -11,15 +11,15 @@ import ControlPointIcon from "@mui/icons-material/ControlPoint";
 import { List } from "../../types.d";
 
 type Props = {
-  lists: List[];
-  setLists: (newLists: List[]) => void;
   iconsLength: number;
   setSnackbarOpen: (open: boolean) => void;
 };
 
+// Stores
+import listStore from "../store/listStore";
+
 // Mutation functions
-// TODO: Error Handling
-async function addList(list: List) {
+async function addListFunction(list: List) {
   const response = await fetch("http://localhost:8000/lists", {
     method: "POST",
     headers: {
@@ -30,18 +30,14 @@ async function addList(list: List) {
   return response.json();
 }
 
-function NavbarListAdd({
-  lists,
-  setLists,
-  iconsLength,
-  setSnackbarOpen,
-}: Props) {
+function NavbarListAdd({ iconsLength, setSnackbarOpen }: Props) {
   //Mutations
   const { mutateAsync: addListMutation } = useMutation({
-    mutationFn: addList,
+    mutationFn: addListFunction,
   });
 
   // States
+  const { lists, addList } = listStore();
   const [newTitle, setNewTitle] = useState<string>("");
 
   // Handlers
@@ -55,8 +51,7 @@ function NavbarListAdd({
       label: newTitle,
       icon: random(0, iconsLength - 1),
     };
-    const updatedLists = [...lists, newList];
-    setLists(updatedLists);
+    addList(newList);
     addListMutation(newList);
     setSnackbarOpen(true);
     setTimeout(snackbarClose, 2500);

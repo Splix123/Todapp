@@ -1,5 +1,4 @@
 // Libraries
-import { filter } from "lodash";
 import { useMutation, useQuery } from "react-query";
 import { useEffect, useState } from "react";
 import {
@@ -27,6 +26,9 @@ import DeleteIcon from "@mui/icons-material/Delete";
 
 // Types
 import { List as TList } from "../../types.d";
+
+// Stores
+import listStore from "../store/listStore";
 
 type Props = {
   selectedListIndex: number;
@@ -59,7 +61,7 @@ function NavbarList({
   setSelectedListName,
   setSnackbarOpen,
 }: Props) {
-  // Fetching the List DB
+  // Fetching Data
   const { data, isLoading, isError } = useQuery({
     queryFn: () =>
       fetch("http://localhost:8000/lists").then((response) => {
@@ -74,12 +76,12 @@ function NavbarList({
   });
 
   // States
-  const [lists, setLists] = useState<TList[]>([]);
+  const { lists, setLists, removeList } = listStore();
   useEffect(() => {
     if (!isLoading && data) {
       setLists(data);
     }
-  }, [isLoading, data]);
+  }, [isLoading, data, setLists]);
 
   const [hoverOverList, setHoverOverList] = useState({
     listId: 0,
@@ -93,11 +95,8 @@ function NavbarList({
   };
 
   const handleDeleteList = (listId: number) => {
-    const updatedLists = filter(lists, function (list) {
-      return list.id !== listId;
-    });
     setSelectedListIndex(1);
-    setLists(updatedLists);
+    removeList(listId);
     deleteListMutation(listId);
   };
 
@@ -140,8 +139,6 @@ function NavbarList({
         ))}
         <Divider style={{ margin: "10px" }} />
         <NavbarListAdd
-          lists={lists}
-          setLists={setLists}
           iconsLength={icons.length}
           setSnackbarOpen={setSnackbarOpen}
         />

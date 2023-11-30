@@ -1,6 +1,6 @@
 // Libraries
 import create from "zustand";
-import { filter, reject } from "lodash"; // Import lodash
+import { filter, reject } from "lodash";
 
 // Types
 import { Task } from "../../types";
