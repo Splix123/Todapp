@@ -25,4 +25,4 @@ TODAP is a simple todo-list application created in order to get to know the basi
 - ~~Retry-Button for no Data~~
 - ~~Global declareFile?~~
 - ~~Use [Lodash](https://lodash.com/)~~
-- Use [Zustand](https://docs.pmnd.rs/zustand/getting-started/introduction)
+- ~~Use [Zustand](https://docs.pmnd.rs/zustand/getting-started/introduction)~~
