@@ -1,5 +1,5 @@
 // Libraries
-import { some, every, map, filter, forEach } from "lodash";
+import { some, every, forEach } from "lodash";
 import { useEffect, useState } from "react";
 import {
   TableHead,
@@ -15,26 +15,23 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 
 // Types
-type Task = {
-  id: number;
-  title: string;
-  checked: boolean;
-};
+import { Task } from "../../types.d";
 
 type Props = {
-  tasks: Task[];
-  setTasks: (newTasks: Task[]) => void;
   changeCheckboxMutation: (changedTask: Task) => void;
   deleteTaskMutation: (taskId: number) => void;
 };
 
+// Stores
+import taskStore from "../store/taskStore";
+
 function ContentTableHead({
-  tasks,
-  setTasks,
   changeCheckboxMutation,
   deleteTaskMutation,
 }: Props) {
   // States
+  const { tasks, checkAllTasks, deleteCheckedTasks } = taskStore();
+
   const [parentCheckboxChecked, setParentCheckboxChecked] =
     useState<boolean>(false);
 
@@ -55,19 +52,14 @@ function ContentTableHead({
   // Handlers
   const handleParentCheckboxChange = () => {
     setParentCheckboxChecked(!parentCheckboxChecked);
-    const updatedTasks = map(tasks, (task) => ({
-      ...task,
-      checked: !parentCheckboxChecked,
-    }));
-    setTasks(updatedTasks);
+    checkAllTasks(!parentCheckboxChecked);
     forEach(tasks, (task) => {
       changeCheckboxMutation({ ...task, checked: !parentCheckboxChecked });
     });
   };
 
   const handleDeleteAllTasks = () => {
-    const updatedTasks = filter(tasks, (task) => !task.checked);
-    setTasks(updatedTasks);
+    deleteCheckedTasks();
     forEach(tasks, (task) => {
       if (task.checked === true) {
         deleteTaskMutation(task.id);

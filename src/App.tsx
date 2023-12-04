@@ -1,12 +1,12 @@
 // Libraries
-import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material";
 import { QueryClient, QueryClientProvider } from "react-query";
 
 // Components
 import User from "./UserSelect";
-import Whole from "./Whole";
+import Content from "./components/Content";
+import Navbar from "./components/Navbar";
 
 // CSS
 import "./App.css";
@@ -22,10 +22,6 @@ const theme = createTheme({
 });
 
 function App() {
-  // States
-  const [selectedListIndex, setSelectedListIndex] = useState<number>(1);
-  const [selectedListName, setSelectedListName] = useState<string>("");
-
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
@@ -35,12 +31,10 @@ function App() {
             <Route
               path="/main"
               element={
-                <Whole
-                  selectedListIndex={selectedListIndex}
-                  setSelectedListIndex={setSelectedListIndex}
-                  setSelectedListName={setSelectedListName}
-                  selectedListName={selectedListName}
-                />
+                <>
+                  <Navbar />
+                  <Content />
+                </>
               }
             />
           </Routes>

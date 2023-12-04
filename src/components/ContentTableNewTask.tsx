@@ -4,20 +4,14 @@ import { useMutation } from "react-query";
 import { TableRow, TableCell, Checkbox, TextField } from "@mui/material";
 
 // Types
-type Task = {
-  id: number;
-  title: string;
-  checked: boolean;
-};
+import { Task } from "../../types.d";
 
-type Props = {
-  selectedListIndex: number;
-  tasks: Task[];
-  setTasks: (newTasks: Task[]) => void;
-};
+// Stores
+import taskStore from "../store/taskStore";
+import listStore from "../store/listStore";
 
 // Mutation functions
-async function addTask(newTask: Task) {
+async function addTaskFunction(newTask: Task) {
   const response = await fetch("http://localhost:8000/tasks", {
     method: "POST",
     headers: {
@@ -28,13 +22,15 @@ async function addTask(newTask: Task) {
   return response.json();
 }
 
-function ContentTableNewTask({ selectedListIndex, tasks, setTasks }: Props) {
+function ContentTableNewTask() {
   // States
+  const { tasks, addTask } = taskStore();
+  const { currentList } = listStore();
   const [newTitle, setNewTitle] = useState<string>("");
 
   // Mutations
   const { mutateAsync: addTodoMutation } = useMutation({
-    mutationFn: addTask,
+    mutationFn: addTaskFunction,
   });
 
   return (
@@ -54,17 +50,12 @@ function ContentTableNewTask({ selectedListIndex, tasks, setTasks }: Props) {
             onKeyUp={async (e) => {
               if (e.key === "Enter") {
                 const newTask: Task = {
-                  id: parseFloat(`${selectedListIndex}.${tasks.length + 1}`),
+                  id: parseFloat(`${currentList}.${tasks.length + 1}`),
                   title: newTitle,
                   checked: false,
                 };
-                const updatedTasks = [...tasks, newTask];
-                setTasks(updatedTasks);
-                try {
-                  addTodoMutation(newTask);
-                } catch (error) {
-                  console.log(error);
-                }
+                addTask(newTask);
+                addTodoMutation(newTask);
                 setNewTitle("");
               }
             }}

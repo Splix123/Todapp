@@ -8,28 +8,18 @@ import { IconButton, ListItem, ListItemText, TextField } from "@mui/material";
 import ControlPointIcon from "@mui/icons-material/ControlPoint";
 
 // Types
-type Snackbar = {
-  open: boolean;
-  severity: "success" | "info" | "error" | "warning";
-  text: string;
-};
+import { List } from "../../types.d";
 
 type Props = {
-  lists: List[];
-  setLists: (newLists: List[]) => void;
   iconsLength: number;
   setSnackbar: (newSnackbar: Snackbar) => void;
 };
 
-type List = {
-  id: number;
-  label: string;
-  icon: number;
-};
+// Stores
+import listStore from "../store/listStore";
 
 // Mutation functions
-// TODO: Error Handling
-async function addList(list: List) {
+async function addListFunction(list: List) {
   const response = await fetch("http://localhost:8000/lists", {
     method: "POST",
     headers: {
@@ -40,13 +30,14 @@ async function addList(list: List) {
   return response.json();
 }
 
-function NavbarListAdd({ lists, setLists, iconsLength, setSnackbar }: Props) {
+function NavbarListAdd({ iconsLength, setSnackbarOpen }: Props) {
   //Mutations
   const { mutateAsync: addListMutation } = useMutation({
-    mutationFn: addList,
+    mutationFn: addListFunction,
   });
 
   // States
+  const { lists, addList } = listStore();
   const [newTitle, setNewTitle] = useState<string>("");
 
   // Handlers
@@ -56,8 +47,7 @@ function NavbarListAdd({ lists, setLists, iconsLength, setSnackbar }: Props) {
       label: newTitle,
       icon: random(0, iconsLength - 1),
     };
-    const updatedLists = [...lists, newList];
-    setLists(updatedLists);
+    addList(newList);
     addListMutation(newList);
     setSnackbar({ open: true, severity: "success", text: "Created List!" });
     setNewTitle("");

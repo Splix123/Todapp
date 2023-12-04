@@ -1,5 +1,4 @@
 // Libraries
-import { filter } from "lodash";
 import { useMutation, useQuery } from "react-query";
 import { useEffect, useState } from "react";
 import {
@@ -26,24 +25,14 @@ import ElectricBoltIcon from "@mui/icons-material/ElectricBolt";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 // Types
-type List = {
-  id: number;
-  label: string;
-  icon: number;
-};
-
-type Snackbar = {
-  open: boolean;
-  severity: "success" | "info" | "error" | "warning";
-  text: string;
-};
+import { List as TList } from "../../types.d";
 
 type Props = {
-  selectedListIndex: number;
-  setSelectedListIndex: (index: number) => void;
-  setSelectedListName: (name: string) => void;
-  setSnackbar: (newSnackbar: Snackbar) => void;
+  setSnackbarOpen: (open: boolean) => void;
 };
+
+// Stores
+import listStore from "../store/listStore";
 
 // Icons
 const icons = [
@@ -63,13 +52,8 @@ async function deleteList(listId: number) {
   return response.json();
 }
 
-function NavbarList({
-  selectedListIndex,
-  setSelectedListIndex,
-  setSelectedListName,
-  setSnackbar,
-}: Props) {
-  // Fetching the List DB
+function NavbarList({ setSnackbarOpen }: Props) {
+  // Fetching Data
   const { data, isLoading, isError } = useQuery({
     queryFn: () =>
       fetch("http://localhost:8000/lists").then((response) => {
@@ -84,12 +68,13 @@ function NavbarList({
   });
 
   // States
-  const [lists, setLists] = useState<List[]>([]);
+  const { lists, setLists, removeList, currentList, setCurrentList } =
+    listStore();
   useEffect(() => {
     if (!isLoading && data) {
       setLists(data);
     }
-  }, [isLoading, data]);
+  }, [isLoading, data, setLists]);
 
   const [hoverOverList, setHoverOverList] = useState({
     listId: 0,
@@ -98,16 +83,12 @@ function NavbarList({
 
   // Handlers
   const handleListItemClick = (index: number) => {
-    setSelectedListIndex(index);
-    setSelectedListName(lists[index - 1].label);
+    setCurrentList(index);
   };
 
   const handleDeleteList = (listId: number) => {
-    const updatedLists = filter(lists, function (list) {
-      return list.id !== listId;
-    });
-    setSelectedListIndex(1);
-    setLists(updatedLists);
+    setCurrentList(1);
+    removeList(listId);
     deleteListMutation(listId);
     setSnackbar({ open: true, severity: "warning", text: "Deleted List!" });
   };
@@ -128,10 +109,10 @@ function NavbarList({
       )}
 
       <List>
-        {lists.map((list: List) => (
+        {lists.map((list: TList) => (
           <ListItemButton
             key={list.id}
-            selected={selectedListIndex === list.id}
+            selected={currentList === list.id}
             onClick={() => handleListItemClick(list.id)}
             onMouseOver={() =>
               setHoverOverList({ listId: list.id, hovered: true })
@@ -150,12 +131,7 @@ function NavbarList({
           </ListItemButton>
         ))}
         <Divider style={{ margin: "10px" }} />
-        <NavbarListAdd
-          lists={lists}
-          setLists={setLists}
-          iconsLength={icons.length}
-          setSnackbar={setSnackbar}
-        />
+        <NavbarListAdd iconsLength={icons.length} setSnackbar={setSnackbar} />
       </List>
     </>
   );

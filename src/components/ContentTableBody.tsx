@@ -1,5 +1,4 @@
 // Libraries
-import { filter } from "lodash";
 import { useState } from "react";
 import {
   TableBody,
@@ -17,28 +16,22 @@ import ContentTableNewTask from "./ContentTableNewTask";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 // Types
-type Task = {
-  id: number;
-  title: string;
-  checked: boolean;
-};
+import { Task } from "../../types.d";
 
 type Props = {
-  selectedListIndex: number;
-  tasks: Task[];
-  setTasks: (newTasks: Task[]) => void;
   changeCheckboxMutation: (changedTask: Task) => void;
   deleteTaskMutation: (taskId: number) => void;
 };
 
+// Stores
+import taskStore from "../store/taskStore";
+
 function ContentTableBody({
-  selectedListIndex,
-  tasks,
-  setTasks,
   changeCheckboxMutation,
   deleteTaskMutation,
 }: Props) {
   // States
+  const { tasks, removeTask, checkTask } = taskStore();
   const [hoverOverRow, setHoverOverRow] = useState({
     rowId: 0,
     hovered: false,
@@ -46,22 +39,17 @@ function ContentTableBody({
 
   // Handlers
   const handleCheckboxChange = (taskId: number) => {
-    const updatedTasks = tasks.map((task) => {
+    // TODO: logic in die Function verschieben
+    tasks.map((task) => {
       if (task.id === taskId) {
-        const checkedTask = { ...task, checked: !task.checked };
-        changeCheckboxMutation(checkedTask);
-        return checkedTask;
+        changeCheckboxMutation({ ...task, checked: !task.checked });
       }
-      return task;
     });
-    setTasks(updatedTasks);
+    checkTask(taskId);
   };
 
   const handleDeleteTask = (taskId: number) => {
-    const updatedTasks = filter(tasks, function (task: Task) {
-      return task.id !== taskId;
-    });
-    setTasks(updatedTasks);
+    removeTask(taskId);
     deleteTaskMutation(taskId);
   };
 
@@ -87,7 +75,7 @@ function ContentTableBody({
                 onChange={() => handleCheckboxChange(task.id)}
               />
             </TableCell>
-            <EditableCell tasks={tasks} setTasks={setTasks} taskId={task.id} />
+            <EditableCell taskId={task.id} />
             <TableCell>
               {hoverOverRow.hovered && hoverOverRow.rowId === task.id && (
                 <IconButton onClick={() => handleDeleteTask(task.id)}>
@@ -97,11 +85,7 @@ function ContentTableBody({
             </TableCell>
           </TableRow>
         ))}
-        <ContentTableNewTask
-          selectedListIndex={selectedListIndex}
-          tasks={tasks}
-          setTasks={setTasks}
-        />
+        <ContentTableNewTask />
       </TableBody>
     </>
   );
