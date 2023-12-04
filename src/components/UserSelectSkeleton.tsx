@@ -1,30 +1,24 @@
 //Libraries
-import { Skeleton, Typography } from "@mui/material";
+import { Divider, Skeleton, Stack, Typography } from "@mui/material";
 
-// TODO: Use MUI Stack
 function UserSelectSkeleton() {
   return (
-    <div style={{ textAlign: "center" }}>
-      <Typography variant="h1">Users</Typography>
-      <Skeleton
-        variant="circular"
-        height={120}
-        width={120}
-        sx={{ display: "inline-block" }}
-      />
-      <Skeleton
-        variant="circular"
-        height={120}
-        width={120}
-        sx={{ display: "inline-block" }}
-      />
-      <Skeleton
-        variant="circular"
-        height={120}
-        width={120}
-        sx={{ display: "inline-block" }}
-      />
-    </div>
+    <>
+      <Typography variant="h1" textAlign="center" sx={{ margin: 5 }}>
+        Users
+      </Typography>
+      <Divider variant="middle" />
+      <Stack
+        direction="row"
+        alignItems="center"
+        justifyContent="center"
+        spacing={5}
+      >
+        <Skeleton variant="circular" height={120} width={120} />
+        <Skeleton variant="circular" height={120} width={120} />
+        <Skeleton variant="circular" height={120} width={120} />
+      </Stack>
+    </>
   );
 }
 

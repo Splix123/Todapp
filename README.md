@@ -10,7 +10,11 @@ TODAP is a simple todo-list application created in order to get to know the basi
 
 ---
 
-## For future Versions
+## Bugs:
+
+- Clicking on a user the first time does not work
+
+## For Version 1.1
 
 - ~~List name for first list~~
 - ~~Error handling~~
@@ -20,9 +24,13 @@ TODAP is a simple todo-list application created in order to get to know the basi
 - ~~Global declareFile?~~
 - ~~Use [Lodash](https://lodash.com/)~~
 - ~~Use [Zustand](https://docs.pmnd.rs/zustand/getting-started/introduction)~~
+- ~~Avatar Pics~~
 - Snackbar for more events
 - Prettify UserSelectSkeleton
+- Prettify UserSelect
+
+## For future Versions
+
 - Different db for different Users
 - Deletable Users
-- Avatar Pics
-- Prettify UserSelect
+- implement AddUser

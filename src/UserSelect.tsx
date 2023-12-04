@@ -1,6 +1,13 @@
 // Libraries
 import { useQuery } from "react-query";
-import { Avatar, Grow, IconButton, Typography } from "@mui/material";
+import {
+  Avatar,
+  Divider,
+  Grow,
+  IconButton,
+  Stack,
+  Typography,
+} from "@mui/material";
 
 //Components
 import UserSelectSkeleton from "./components/UserSelectSkeleton";
@@ -25,29 +32,44 @@ function UserSelect() {
 
   let timeout = 0;
 
-  // TODO: Use MUI Stack
+  // BUG: Clicking on a user the first time does not work
   return (
-    <div style={{ textAlign: "center" }}>
-      <Typography variant="h1">Users</Typography>
-      {users.map((user: User) => {
-        timeout += 300;
-        return (
-          <Grow
-            in
-            style={{ marginTop: 200, transformOrigin: "0 0 0" }}
-            {...{ timeout: timeout }}
-            key={user.id}
-          >
-            <IconButton color="info" href="/main">
-              <Avatar alt={user.name} sx={{ height: 120, width: 120 }}>
-                {user.name}
-              </Avatar>
-            </IconButton>
-          </Grow>
-        );
-      })}
-      <AddUser timeout={timeout} />
-    </div>
+    <>
+      <Typography variant="h1" textAlign="center" sx={{ margin: 5 }}>
+        Users
+      </Typography>
+      <Divider variant="middle" />
+      <Stack
+        direction="row"
+        alignItems="center"
+        justifyContent="center"
+        spacing={5}
+        sx={{ margin: 5 }}
+      >
+        {users.map((user: User) => {
+          timeout += 300;
+          return (
+            <Grow
+              in
+              style={{ transformOrigin: "0 0 0" }}
+              {...{ timeout: timeout }}
+              key={user.id}
+            >
+              <IconButton color="info" href="/main">
+                <Avatar
+                  src={user.avatar}
+                  alt={user.name}
+                  sx={{ height: 120, width: 120 }}
+                >
+                  {user.name}
+                </Avatar>
+              </IconButton>
+            </Grow>
+          );
+        })}
+        <AddUser timeout={timeout} />
+      </Stack>
+    </>
   );
 }
 

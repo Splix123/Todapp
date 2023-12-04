@@ -12,11 +12,7 @@ type Props = {
 function AddUser({ timeout }: Props) {
   return (
     <>
-      <Grow
-        in
-        style={{ marginTop: 200, transformOrigin: "0 0 0" }}
-        {...{ timeout: timeout }}
-      >
+      <Grow in style={{ transformOrigin: "0 0 0" }} {...{ timeout: timeout }}>
         <IconButton color="success">
           {/* FIXME: user.name */}
           <Avatar alt="{user.name}" sx={{ height: 120, width: 120 }}>

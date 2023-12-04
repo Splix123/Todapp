@@ -2,15 +2,18 @@
   "users": [
     {
       "id": 1,
-      "name": "Moritz"
+      "name": "John",
+      "avatar": "https://marketimmersion.com/wp-content/uploads/2019/08/round-avatar.jpg"
     },
     {
       "id": 2,
-      "name": "User2"
+      "name": "Laura",
+      "avatar": "https://www.iceguru.com/wp-content/uploads/2017/04/avatar-round-1.png"
     },
     {
       "id": 3,
-      "name": "User3"
+      "name": "Luca",
+      "avatar": "https://ddgobkiprc33d.cloudfront.net/5c20071a-c083-4548-b3b8-874dd092647e.png"
     }
   ],
   "lists": [
