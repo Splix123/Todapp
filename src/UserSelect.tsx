@@ -1,4 +1,5 @@
 // Libraries
+import { useEffect } from "react";
 import { useQuery } from "react-query";
 import { Avatar, Grow, IconButton, Typography } from "@mui/material";
 
@@ -11,10 +12,11 @@ import { User } from "../types.d";
 
 // Stores
 import snackbarStore from "./store/snackbarStore";
+import userStore from "./store/userStore";
 
 function UserSelect() {
   //Fetch data
-  const { data: users, isLoading } = useQuery({
+  const { data, isLoading } = useQuery({
     queryFn: () =>
       fetch(`http://localhost:8000/users`).then((response) => {
         return response.json();
@@ -24,6 +26,12 @@ function UserSelect() {
 
   // States
   const { openSnackbar } = snackbarStore();
+  const { users, setUsers } = userStore();
+  useEffect(() => {
+    if (!isLoading && data) {
+      setUsers(data);
+    }
+  }, [isLoading, data, setUsers]);
 
   // Handlers
   const handleUserSelect = () => {
