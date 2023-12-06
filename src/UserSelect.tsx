@@ -9,6 +9,9 @@ import AddUser from "./components/AddUser";
 // Types
 import { User } from "../types.d";
 
+// Stores
+import snackbarStore from "./store/snackbarStore";
+
 function UserSelect() {
   //Fetch data
   const { data: users, isLoading } = useQuery({
@@ -19,6 +22,13 @@ function UserSelect() {
     queryKey: ["users"],
   });
 
+  // States
+  const { openSnackbar } = snackbarStore();
+
+  // Handlers
+  const handleUserSelect = () => {
+    openSnackbar({ severity: "success", text: "Selected User!" });
+  };
   if (isLoading) {
     return <UserSelectSkeleton />;
   }
@@ -38,7 +48,7 @@ function UserSelect() {
             {...{ timeout: timeout }}
             key={user.id}
           >
-            <IconButton color="info" href="/main">
+            <IconButton color="info" href="/main" onClick={handleUserSelect}>
               <Avatar alt={user.name} sx={{ height: 120, width: 120 }}>
                 {user.name}
               </Avatar>

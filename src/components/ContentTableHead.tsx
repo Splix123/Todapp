@@ -24,6 +24,7 @@ type Props = {
 
 // Stores
 import taskStore from "../store/taskStore";
+import snackbarStore from "../store/snackbarStore";
 
 function ContentTableHead({
   changeCheckboxMutation,
@@ -31,6 +32,7 @@ function ContentTableHead({
 }: Props) {
   // States
   const { tasks, checkAllTasks, deleteCheckedTasks } = taskStore();
+  const { openSnackbar } = snackbarStore();
 
   const [parentCheckboxChecked, setParentCheckboxChecked] =
     useState<boolean>(false);
@@ -65,6 +67,7 @@ function ContentTableHead({
         deleteTaskMutation(task.id);
       }
     });
+    openSnackbar({ severity: "warning", text: "Deleted all finished tasks!" });
   };
 
   return (

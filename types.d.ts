@@ -14,4 +14,10 @@ export type Task = {
   title: string;
   checked: boolean;
 };
+
+export type Snackbar = {
+  open?: boolean;
+  severity: "success" | "info" | "error" | "warning";
+  text: string;
+};
 export default types.d;
