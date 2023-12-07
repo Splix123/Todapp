@@ -1,4 +1,5 @@
 // Libraries
+import { useEffect } from "react";
 import { useQuery } from "react-query";
 import {
   Avatar,
@@ -16,9 +17,13 @@ import AddUser from "./components/AddUser";
 // Types
 import { User } from "../types.d";
 
+// Stores
+import snackbarStore from "./store/snackbarStore";
+import userStore from "./store/userStore";
+
 function UserSelect() {
   //Fetch data
-  const { data: users, isLoading } = useQuery({
+  const { data, isLoading } = useQuery({
     queryFn: () =>
       fetch(`http://localhost:8000/users`).then((response) => {
         return response.json();
@@ -26,6 +31,19 @@ function UserSelect() {
     queryKey: ["users"],
   });
 
+  // States
+  const { openSnackbar } = snackbarStore();
+  const { users, setUsers } = userStore();
+  useEffect(() => {
+    if (!isLoading && data) {
+      setUsers(data);
+    }
+  }, [isLoading, data, setUsers]);
+
+  // Handlers
+  const handleUserSelect = () => {
+    openSnackbar({ severity: "success", text: "Selected User!" });
+  };
   if (isLoading) {
     return <UserSelectSkeleton />;
   }

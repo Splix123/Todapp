@@ -1,5 +1,4 @@
 // Libraries
-import { useState } from "react";
 import { Drawer, Typography } from "@mui/material";
 
 // Components
@@ -10,9 +9,6 @@ import CustomSnackbar from "./CustomSnackbar";
 const DRAWER_WIDTH = 300;
 
 function Navbar() {
-  // States
-  const [snackbarOpen, setSnackbaropen] = useState<boolean>(false);
-
   return (
     <Drawer
       PaperProps={{
@@ -32,8 +28,8 @@ function Navbar() {
       >
         TODAP
       </Typography>
-      <NavbarList setSnackbarOpen={setSnackbaropen} />
-      <CustomSnackbar snackbarOpen={snackbarOpen} />
+      <NavbarList />
+      <CustomSnackbar />
     </Drawer>
   );
 }

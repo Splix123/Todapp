@@ -27,12 +27,9 @@ import DeleteIcon from "@mui/icons-material/Delete";
 // Types
 import { List as TList } from "../../types.d";
 
-type Props = {
-  setSnackbarOpen: (open: boolean) => void;
-};
-
 // Stores
 import listStore from "../store/listStore";
+import snackbarstStore from "../store/snackbarStore";
 
 // Icons
 const icons = [
@@ -52,7 +49,7 @@ async function deleteList(listId: number) {
   return response.json();
 }
 
-function NavbarList({ setSnackbarOpen }: Props) {
+function NavbarList() {
   // Fetching Data
   const { data, isLoading, isError } = useQuery({
     queryFn: () =>
@@ -81,6 +78,8 @@ function NavbarList({ setSnackbarOpen }: Props) {
     hovered: false,
   });
 
+  const { openSnackbar } = snackbarstStore();
+
   // Handlers
   const handleListItemClick = (index: number) => {
     setCurrentList(index);
@@ -90,6 +89,7 @@ function NavbarList({ setSnackbarOpen }: Props) {
     setCurrentList(1);
     removeList(listId);
     deleteListMutation(listId);
+    openSnackbar({ severity: "warning", text: "Deleted List!" });
   };
 
   //Loading screen
@@ -130,10 +130,7 @@ function NavbarList({ setSnackbarOpen }: Props) {
           </ListItemButton>
         ))}
         <Divider style={{ margin: "10px" }} />
-        <NavbarListAdd
-          iconsLength={icons.length}
-          setSnackbarOpen={setSnackbarOpen}
-        />
+        <NavbarListAdd iconsLength={icons.length} />
       </List>
     </>
   );

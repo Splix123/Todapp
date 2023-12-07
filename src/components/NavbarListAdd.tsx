@@ -12,11 +12,11 @@ import { List } from "../../types.d";
 
 type Props = {
   iconsLength: number;
-  setSnackbarOpen: (open: boolean) => void;
 };
 
 // Stores
 import listStore from "../store/listStore";
+import snackbarstStore from "../store/snackbarStore";
 
 // Mutation functions
 async function addListFunction(list: List) {
@@ -30,7 +30,7 @@ async function addListFunction(list: List) {
   return response.json();
 }
 
-function NavbarListAdd({ iconsLength, setSnackbarOpen }: Props) {
+function NavbarListAdd({ iconsLength }: Props) {
   //Mutations
   const { mutateAsync: addListMutation } = useMutation({
     mutationFn: addListFunction,
@@ -38,13 +38,10 @@ function NavbarListAdd({ iconsLength, setSnackbarOpen }: Props) {
 
   // States
   const { lists, addList } = listStore();
+  const { openSnackbar } = snackbarstStore();
   const [newTitle, setNewTitle] = useState<string>("");
 
   // Handlers
-  const snackbarClose = () => {
-    setSnackbarOpen(false);
-  };
-
   const handleNewList = () => {
     const newList = {
       id: lists.length + 1,
@@ -53,8 +50,7 @@ function NavbarListAdd({ iconsLength, setSnackbarOpen }: Props) {
     };
     addList(newList);
     addListMutation(newList);
-    setSnackbarOpen(true);
-    setTimeout(snackbarClose, 2500);
+    openSnackbar({ severity: "success", text: "Created List!" });
     setNewTitle("");
   };
 

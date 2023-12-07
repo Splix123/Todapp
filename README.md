@@ -25,12 +25,13 @@ TODAP is a simple todo-list application created in order to get to know the basi
 - ~~Use [Lodash](https://lodash.com/)~~
 - ~~Use [Zustand](https://docs.pmnd.rs/zustand/getting-started/introduction)~~
 - ~~Avatar Pics~~
-- Snackbar for more events
+- ~~Snackbar for more events~~
+- Deletable Users
+- implement AddUser
 - Prettify UserSelectSkeleton
 - Prettify UserSelect
 
 ## For future Versions
 
 - Different db for different Users
-- Deletable Users
-- implement AddUser
+- Snackbar for even more events

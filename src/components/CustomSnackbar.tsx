@@ -1,24 +1,41 @@
 // Libraries
 import { Alert, Snackbar } from "@mui/material";
 
-// Types
-type Props = {
-  snackbarOpen: boolean;
+// Stores
+import snackbarstStore from "../store/snackbarStore";
+
+// TODO: put in the right colors
+const snackbarColors = {
+  success: "#388e3c",
+  info: "#0288d1",
+  error: "#d32f2f",
+  warning: "#f57b00",
 };
 
-function CustomSnackbar({ snackbarOpen }: Props) {
+function CustomSnackbar() {
+  // States
+  const { open, severity, text, openSnackbar } = snackbarstStore();
+
+  // Handlers
+  const closeSnackbar = () => {
+    openSnackbar({ open: false, severity: "success", text: "" });
+  };
+
+  if (open) {
+    setTimeout(closeSnackbar, 2500);
+  }
   return (
     <>
-      <Snackbar open={snackbarOpen}>
+      <Snackbar open={open}>
         <Alert
-          severity="success"
+          severity={severity}
           sx={{
             width: "100%",
-            backgroundColor: "#388e3c",
+            backgroundColor: snackbarColors[severity],
             fontWeight: "bold",
           }}
         >
-          Created List!
+          {text}
         </Alert>
       </Snackbar>
     </>
