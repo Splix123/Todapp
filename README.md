@@ -28,8 +28,8 @@ TODAP is a simple todo-list application created in order to get to know the basi
 - ~~Snackbar for more events~~
 - Deletable Users
 - implement AddUser
-- Prettify UserSelectSkeleton
-- Prettify UserSelect
+- ~~Prettify UserSelectSkeleton~~
+- ~~Prettify UserSelect~~
 
 ## For future Versions
 

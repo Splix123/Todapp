@@ -13,7 +13,9 @@ function UserSelectSkeleton() {
         alignItems="center"
         justifyContent="center"
         spacing={5}
+        sx={{ margin: 5 }}
       >
+        <Skeleton variant="circular" height={120} width={120} />
         <Skeleton variant="circular" height={120} width={120} />
         <Skeleton variant="circular" height={120} width={120} />
         <Skeleton variant="circular" height={120} width={120} />
