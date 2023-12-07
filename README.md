@@ -35,3 +35,5 @@ TODAP is a simple todo-list application created in order to get to know the basi
 
 - Different db for different Users
 - Snackbar for even more events
+- Bring more colors in
+- Use [react-hook-form](https://react-hook-form.com/) for the Add-User selection
