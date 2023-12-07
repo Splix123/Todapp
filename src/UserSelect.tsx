@@ -44,11 +44,12 @@ function UserSelect() {
   const handleUserSelect = () => {
     openSnackbar({ severity: "success", text: "Selected User!" });
   };
+
   if (isLoading) {
     return <UserSelectSkeleton />;
   }
 
-  let timeout = 0;
+  let timeout = 100;
 
   // BUG: Clicking on a user the first time does not work
   return (
@@ -73,7 +74,7 @@ function UserSelect() {
               {...{ timeout: timeout }}
               key={user.id}
             >
-              <IconButton color="info" href="/main">
+              <IconButton color="info" href="/main" onClick={handleUserSelect}>
                 <Avatar
                   src={user.avatar}
                   alt={user.name}
@@ -85,6 +86,7 @@ function UserSelect() {
             </Grow>
           );
         })}
+        {/* BUG: Grow does not work with right timing */}
         <AddUser timeout={timeout} />
       </Stack>
     </>

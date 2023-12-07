@@ -61,9 +61,8 @@ function AddUser({ timeout }: Props) {
     if (name === "") {
       setError(true);
     } else {
-      // TODO: implemet user picture here
-      addUserMutation({ id: users.length + 1, name: name });
-      addUser({ id: users.length + 1, name: name });
+      addUserMutation({ avatar: picture, id: users.length + 1, name: name });
+      addUser({ avatar: picture, id: users.length + 1, name: name });
       setOpenDialog(false);
     }
   };
@@ -74,11 +73,7 @@ function AddUser({ timeout }: Props) {
 
   return (
     <>
-      <Grow
-        in
-        style={{ marginTop: 200, transformOrigin: "0 0 0" }}
-        {...{ timeout: timeout }}
-      >
+      <Grow in style={{ transformOrigin: "0 0 0" }} {...{ timeout: timeout }}>
         <IconButton color="success" onClick={handleClickAddUser}>
           <Avatar alt="Add User" sx={{ height: 120, width: 120 }}>
             <PersonAddAlt1Icon sx={{ height: 40, width: 40 }} />
