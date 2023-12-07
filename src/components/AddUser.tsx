@@ -28,20 +28,20 @@ type Props = {
 import userStore from "../store/userStore";
 
 // Mutation functions
-async function addUserFunction(user: User) {
+async function addUserFunction(newUser: User) {
   const response = await fetch("http://localhost:8000/users", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(user),
+    body: JSON.stringify(newUser),
   });
   return response.json();
 }
 
 function AddUser({ timeout }: Props) {
   //Mutations
-  const { mutateAsync: addUserFunction } = useMutation({
+  const { mutateAsync: addUserMutation } = useMutation({
     mutationFn: addUserFunction,
   });
 
@@ -62,7 +62,7 @@ function AddUser({ timeout }: Props) {
       setError(true);
     } else {
       // TODO: implemet user picture here
-      addUserFunction({ id: users.length + 1, name: name });
+      addUserMutation({ id: users.length + 1, name: name });
       addUser({ id: users.length + 1, name: name });
       setOpenDialog(false);
     }
