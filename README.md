@@ -29,7 +29,7 @@ TODAP is a simple todo-list application created in order to get to know the basi
 - ~~implement AddUser~~
 - ~~Prettify UserSelectSkeleton~~
 - ~~Prettify UserSelect~~
-- Deletable Users
+- ~~Deletable Users~~
 
 ## For future Versions
 
